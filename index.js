@@ -8,13 +8,26 @@ let seniorPassenger = false;
 const seniorPrice = 0.6;
 const ageInputStr = "How old are you?";
 const distanceInputStr = "How far are you travelling? (km)";
-const errorMessageInput = "Input not valid."
+const errorMessageInput = "Input not valid. Please try again."
 const ticketStr = "You can buy your ticket for:";
+let validInp;
+const churZurich = 119.3;
+const churBern = 240.8;
+const churGeneva = 396.7;
+const churLuzern = 141.8; 
+let destination;
 
-function errorNaN (input) {
-    if (isNaN(input)){
-        console.log(errorMessageInput);
-    } 
+function askInput (input, str){
+    return prompt(str);
+}
+
+function validInput(input) {
+    if (isNaN(input) || input.length == 0 || input == 0) {
+        return false;
+    }
+    else{
+        return true;
+    }
 }
 
 function priceCalculator (distance) {
@@ -38,10 +51,21 @@ function seniorDiscount (price) {
     return price*seniorPrice;
 }
 
-age = prompt(ageInputStr);
-errorNaN(age);
-distance = prompt(distanceInputStr);
-errorNaN(distance);
+do {
+    age= askInput(age, ageInputStr);
+    validInp = validInput(age);
+    if (!validInp){
+        alert(errorMessageInput);
+    }
+} while (!validInp);
+do {
+    distance = askInput(distance, distanceInputStr);
+    validInp = validInput(distance);
+    if (!validInp){
+        alert(errorMessageInput);
+    }
+} while (!validInp);
+
 checkForDiscounts(age);
 if (juniorPassenger) {
     ticketPrice = juniorDiscount(priceCalculator(distance));
